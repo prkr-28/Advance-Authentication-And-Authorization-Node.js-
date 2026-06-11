@@ -1,0 +1,39 @@
+# Top-level Git ignore for CivicPulse monorepo
+
+# Node modules
+node_modules/
+
+# Environment files
+.env
+.env.*
+
+# Build outputs
+/client/build/
+/client/build/*
+/client/dist/
+
+# Editor temp files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# OS files
+Thumbs.db
+desktop.ini
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage
+/coverage/
+
+# Misc
+.DS_Store
+*.pem
