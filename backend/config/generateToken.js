@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { redisClient } from '../index.js';
 
 export const generateToken = async (user, res) => {
     const accessToken = jwt.sign(
@@ -17,8 +18,17 @@ export const generateToken = async (user, res) => {
     await redisClient.set(refreshTokenKey, refreshToken, 'EX', 7 * 24 * 60 * 60);
     res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        //secure: true,
         sameSite: 'strict',
+        maxAge: 1 * 60 * 1000
+    });
+
+    res.cookie('accessToken', accessToken, {
+        httpOnly: true,
+        //secure: true,
+        sameSite: 'none',
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
+
+    return { accessToken, refreshToken }
 };

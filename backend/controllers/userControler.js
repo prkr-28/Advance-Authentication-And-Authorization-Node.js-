@@ -8,6 +8,7 @@ import crypto from 'crypto';
 import { sendMail } from '../config/sendMail.js';
 import { getOtpHtml, getVerifyEmailHtml } from '../config/html.js';
 import jwt from 'jsonwebtoken';
+import { generateToken } from '../config/generateToken.js';
 
 export const registerUser = TryCatch(async (req, res) => {
     const sanitizedBody = sanize(req.body);
@@ -169,5 +170,11 @@ export const verifyOtp = TryCatch(async (req, res) => {
         return res.status(400).json({ message: 'User not found' });
     }
 
-    res.status(200).json({ message: 'Login successful' });
+    const token = generateToken(user, res);
+
+    res.status(200).json({ message: 'Login successful', user, ...token });
+});
+
+export const myProfile = TryCatch(async (req, res) => {
+    res.status(200).json({ user: req.user });
 });
